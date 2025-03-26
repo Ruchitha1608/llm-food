@@ -43,7 +43,8 @@ def create_router(handler: MainHandler, CONFIG):
         
         # Collects the messages in a list of dicts
         messages = prompt_handler.get_messages(prompt_request)
-        
+        # print("messages are: ",messages)
+
         # For function calling functionality
         functions = []
         if prompt_request.function_call:
@@ -58,21 +59,25 @@ def create_router(handler: MainHandler, CONFIG):
                 client=client
             )
             
+            # print("prompt_response is: ",prompt_response)
             # Formats and returns
             response = prompt_handler.prepare_response(prompt_response)
 
         except Exception as e:
-            print(e)
+            print(e)  
+            # print(e.with_traceback)
             response = {"response": "Oops there was an error, please try again", "function_call": None}
 
         return response
     
     @router.post("/chat/function_call")
     async def function_call(function_call: FunctionCall):
+    # async def function_call(function_call):
         """Receives the function call from the frontend and executes it"""
 
         # Preparing functions
         function_call_properties = jsonable_encoder(function_call)
+        print("function_call_properties is:",function_call_properties)
         function_name = function_call_properties["name"]
         function_arguments = json.loads(function_call_properties["arguments"])
 

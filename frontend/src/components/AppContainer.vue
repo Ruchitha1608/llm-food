@@ -254,10 +254,12 @@
           }
         )
         .then(response => {
-          console.log(response)
+          // console.log(response)
           let responseObject = response.data
           let answer = responseObject.response
-          let functionCallSignal = responseObject.function_call
+          // let functionCallSignal = responseObject.function_call
+          console.log("function call is: ",responseObject.tool_calls)
+          let functionCallSignal = (responseObject.tool_calls==null)?null:responseObject.tool_calls[0].function
 
           // If we don't have to function call it will return the answer
           if (functionCallSignal == false || functionCallSignal == null) {
@@ -310,6 +312,7 @@
       },
       // Function calling
       handleFunctionCall: function(functionCallSignal) {
+        console.log("functionCallSignal is: ",functionCallSignal)
         return new Promise(async (resolve, reject) => {
           try {
             let functionCallResponse = await axios.post(

@@ -17,7 +17,7 @@ except:
     from .data_models import Restaurant, Foods
     from .database import SessionLocal
 
-# Llamaindex
+# Llamaindex 
 from llama_index.vector_stores import PineconeVectorStore, SimpleVectorStore 
 from llama_index.storage.storage_context import StorageContext
 from llama_index import VectorStoreIndex, Document, ServiceContext
@@ -32,7 +32,7 @@ from llama_index.vector_stores.types import MetadataFilters, ExactMatchFilter
 #import weaviate
 import pinecone
 
-ENVIRONMENT = "gcp-starter"
+ENVIRONMENT = "us-east-1"
 INDEX_NAME = "auto-food-order"
 
 def process_restaurants():

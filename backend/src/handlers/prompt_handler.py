@@ -13,6 +13,8 @@ from src.schemas import ChatRequest
 # Utils
 import json
 
+from src.prompts.functions.all_functions import all_functions
+
 
 CFG_PROMPTS = CONFIG["prompts"]
 CFG_CHAT = CFG_PROMPTS["chat"]
@@ -39,6 +41,8 @@ class PromptHandler():
         # Retrieves the chat log
         chatlog = jsonable_encoder(prompt_request.query.history)
 
+        # print("chatlog is:",chatlog)
+
         # Formatting - removes "name" parameter from non-functional inputs
         chatlog = [
             {"role": message["role"], "content": message["content"]}
@@ -59,12 +63,17 @@ class PromptHandler():
     def prepare_response(self, response):
         """Formats the response from the system"""
         response = jsonable_encoder(response)
+        # print("response in prepare_response is: ",response)
+        # print("tool_calls is:",response["choices"][0]["message"].get('tool_calls',None))
         return {
             "response": response["choices"][0]["message"]["content"],
-            "function_call": response["choices"][0]["message"].get("function_call", None),
+            # "function_call": response["choices"][0]["message"].get("function_call", None),
+            "tool_calls": response["choices"][0]["message"].get('tool_calls',None),
+            # "tools_call":response['tools_calls'][0]['function']
         }
 
     
     def get_functions(self,):
         """Returns the functions signatures"""
-        return ALL_ALLOWED_FUNCTIONS
+        # return ALL_ALLOWED_FUNCTIONS
+        return all_functions
