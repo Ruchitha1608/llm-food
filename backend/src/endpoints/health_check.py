@@ -3,7 +3,7 @@ from enum import Enum
 from fastapi import status
 from fastapi.routing import APIRouter
 
-from fastapi_utils.api_model import APIModel
+from fastapi_utils.api_model import APIModel 
 from pydantic import Field
 
 router = APIRouter()
@@ -43,4 +43,4 @@ async def get_health_status():
         "description": "API Service for Backend",
         "version": "v1.0",
         "status": ServiceHealthEnum.OK,
-    }
+    }  
